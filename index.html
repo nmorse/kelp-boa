@@ -1,0 +1,82 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>kelp-boa demo</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.16.2/cytoscape.min.js" integrity="sha512-90CUvhfbtRMgSr2cvzgYyGchUg2CtOHMavYdm03huN42UAjWtKhHBsQ+H7K4KGJ4MeS0P9FiZZwC7lxnIl6isg==" crossorigin="anonymous"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+		
+		<style>
+			body {
+				font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+				font-size: 14px;
+			}
+
+			#cy {
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				z-index: 999;
+			}
+
+			h1 {
+				opacity: 0.5;
+				font-size: 1em;
+				font-weight: bold;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<h1>cytoscape-euler demo</h1>
+
+		<div id="cy"></div>
+
+	</body>
+	<script>
+	var cy = cytoscape({
+		container: document.getElementById('cy'), // container to render in
+	   elements: fetch('./src/graph-data.json').then(function( res ){ return res.json(); }),
+		  style: [ // the stylesheet for the graph
+		  {
+			selector: 'node',
+			style: {
+			  'background-color': '#669',
+			  'label': 'data(id)'
+			}
+		  },
+		  {
+			selector: 'edge',
+			style: {
+			  'width': 3,
+			  'line-color': '#caa',
+			  'target-arrow-color': '#caa',
+			  'target-arrow-shape': 'triangle',
+			  'curve-style': 'bezier'
+			}
+		  }
+		],
+		layout: {
+		  name: 'grid',
+		  rows: 2
+		}
+	
+	    // // demo your layout
+	    // layout: {
+	    //     name: 'euler',
+	    //     randomize: true,
+	    //     animate: false
+	
+	    //     // some more options here...
+	    // },
+	
+	
+	});
+
+	</script>
+<!-- https://jira.atlassian.com/rest/api/latest/search?jql=labels=affects-server -->
+</html>
