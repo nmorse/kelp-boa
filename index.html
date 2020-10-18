@@ -41,7 +41,7 @@
 
 </body>
 <script>
-	const netlifyProxy = '/.netlify/functions/get-jira-demo';
+	const netlifyProxy = '/functions/get-jira-demo';
 	var cy = cytoscape({
 		container: document.getElementById('cy'), // container to render in
 		elements: getElements(netlifyProxy),
@@ -89,6 +89,7 @@
 		}
 		catch (e) {
 			console.log('*** response error ***', e);
+			return [];
 		}
 		return response.ok ? response.json() : []; // parses JSON response into native JavaScript objects
 	}
