@@ -1,4 +1,3 @@
 [build]
 	functions = "functions"
-[plugins] 
-    package = "@netlify/plugin-functions-install-core"
+    Command = "cd functions/get-jira-demo npm i"
