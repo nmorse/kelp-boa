@@ -8,4 +8,5 @@
  * Jira API
  * Ramda
 
+jira.atlassian.com/rest/api/latest/search?jql=labels=affects-server
  
