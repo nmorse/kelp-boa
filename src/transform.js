@@ -8,7 +8,7 @@ const transformIssuesToNodes = (obj) => {
     const getTarget = (node) => R.path([0, 'id'], node.data.fields.issuelinks? node.data.fields.issuelinks: []);
     const edges = R.map(node => {
         const target = getTarget(node);
-        return target ? {data: {source: node.data.id, target, group: "edges"}}: null;
+        return target ? {data: {source: node.data.id, target}, group: "edges"}: null;
     }, nodes);
     return R.concat(nodes, R.filter(notNull, edges));
 };
