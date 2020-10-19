@@ -16,9 +16,8 @@ exports.handler = async function (event, context) {
     } catch (err) {
         console.log(err); // output to netlify function log
         return {
-            statusText: "Error in fetch",
             statusCode: 500,
-            body: JSON.stringify({ msg: err.message }) // Could be a custom message or object i.e. JSON.stringify(err)
+            body: JSON.stringify({ msg: `Error in fetch ${err.message}` }) // Could be a custom message or object i.e. JSON.stringify(err)
         };
     }
 
@@ -33,9 +32,8 @@ exports.handler = async function (event, context) {
     } catch (err) {
         console.log(err); // output to netlify function log
         return {
-            statusText: "Error in json function",
             statusCode: 500,
-            body: JSON.stringify({ msg: err.message }) // Could be a custom message or object i.e. JSON.stringify(err)
+            body: JSON.stringify({ msg: `Error in json function ${err.message}` }) // Could be a custom message or object i.e. JSON.stringify(err)
         };
     }
 };
