@@ -3,7 +3,9 @@ const notNull = n => (n !== null && n !== undefined);
 const transformIssuesToNodes = (obj) => {
     //console.log('*** transform input ***', obj);
     const nodes = R.map(ele => ({data: ele, group: "nodes"}), R.prop('issues', obj));
-    const getTarget = (node) => R.head(R.path(['data', 'fields', 'issueLinks', 0, 'id']), node);
+    
+    //data.fields.issuelinks[0].id
+    const getTarget = (node) => R.head(R.path([0, 'id']), node.data.fields.issuelinks? node.data.fields.issuelinks: []);
     const edges = R.map(node => {
         const target = getTarget(node);
         return target ? {data: {source: node.id, target, group: "edges"}}: null;
