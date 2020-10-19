@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 exports.handler = async function(event, context) {
   try {
-    const jiraUrl = `https//jira.atlassian.com/rest/api/latest/search?jql=labels=affects-server`;
+    const jiraUrl = "jira.atlassian.com/rest/api/latest/search?jql=labels=affects-server";
     const response = await fetch(jiraUrl, {
       headers: { Accept: "application/json" }
     });
