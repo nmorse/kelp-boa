@@ -44,7 +44,7 @@
 	const netlifyProxy = '/.netlify/functions/get-jira-demo';
 	var cy = cytoscape({
 		container: document.getElementById('cy'), // container to render in
-		elements: getElements(netlifyProxy),
+		elements: getGraphElements(netlifyProxy),
 		style: [ // the stylesheet for the graph
 			{
 				selector: 'node',
@@ -81,17 +81,17 @@
 
 	});
 	// Get method implementation:
-	async function getElements(url = '') {
+	async function getGraphElements(url = '') {
 		// Default options are marked with *
 		try {
 			const response = await fetch(url);
 			console.log('*** response ***', response);
+			return response.ok ? response.json() : []; // parses JSON response into native JavaScript objects
 		}
 		catch (e) {
 			console.log('*** response error ***', e);
 			return [];
 		}
-		return response.ok ? response.json() : []; // parses JSON response into native JavaScript objects
 	}
 
 </script>
