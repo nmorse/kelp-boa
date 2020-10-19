@@ -85,7 +85,7 @@
 		// Default options are marked with *
 		try {
 			const response = await fetch(url);
-			const data = response.ok ? response.json() : []; // parses JSON response into native JavaScript objects
+			const data = response.ok ? await response.json() : []; // parses JSON response into native JavaScript objects
 			console.log('*** data ***', data);
 			return data;
 		}
