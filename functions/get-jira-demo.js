@@ -11,9 +11,11 @@ exports.handler = async function (event, context) {
         });
         if (!response.ok) {
             // NOT res.status >= 200 && res.status < 300
+            console.log("not response.ok");
             return { statusCode: response.status, body: response.statusText };
         }
     } catch (err) {
+        console.log("catch fetch");
         console.log(err); // output to netlify function log
         return {
             statusCode: 500,
@@ -24,12 +26,13 @@ exports.handler = async function (event, context) {
 
     try {
 
-        const data = await response.json();
+        data = await response.json();
         return {
             statusCode: 200,
             body: JSON.stringify({ data })
         };
     } catch (err) {
+        console.log("catch json() ");
         console.log(err); // output to netlify function log
         return {
             statusCode: 500,
