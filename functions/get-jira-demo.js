@@ -5,8 +5,9 @@ exports.handler = async function (event, context) {
     let data = {};
     let response;
     try {
-        const jiraUrl = "jira.atlassian.com/rest/api/latest/search?jql=labels=affects-server";
+        const jiraUrl = "https://jira.atlassian.com/rest/api/latest/search?jql=labels=affects-server";
         response = await fetch(jiraUrl, {
+            method: 'GET',
             headers: { Accept: "application/json" }
         });
         if (!response.ok) {
