@@ -1,8 +1,23 @@
+const notNull = n => n !== null;
 
-const transform = (obj) => {
-//console.log('*** transform input ***', obj);
-    return R.map(ele => ({data: ele, group: "nodes"}), R.prop('issues', obj));
-// return [
+const transformIssuesToNodes = (obj) => {
+    //console.log('*** transform input ***', obj);
+    const nodes = R.map(ele => ({data: ele, group: "nodes"}), R.prop('issues', obj));
+    const getTarget = (node) => R.first(R.prop('id'), node);
+    const edges = R.map(node => {
+        const target = getTarget(node);
+        return target ? {data: {source: node.id, target, group: "edges"}}: null;
+    }, nodes);
+    return R.concat(nodes, R.filter(notNull, edges));
+};
+
+const getLabelsAsNodes = (obj) => {
+    //console.log('*** transform input ***', obj);
+    const labels = R.uniq(R.flatten(R.map(ele => R.prop('labels', ele), R.prop('issues', obj))));
+    return R.map(ele => ({data: ele, group: "nodes"}), labels);
+};
+
+//   [
 //         {
 //             "data": {
 //                 "id": "glyph9",
@@ -74,5 +89,4 @@ const transform = (obj) => {
 //             "grabbable": true,
 //             "classes": ""
 //         }
-//     ];
-}//R.identity(obj);
+//    ]
