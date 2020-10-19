@@ -5,7 +5,7 @@ const transformIssuesToNodes = (obj) => {
     const nodes = R.map(ele => ({data: ele, group: "nodes"}), R.prop('issues', obj));
     
     //data.fields.issuelinks[0].id
-    const getTarget = (node) => R.head(R.path([0, 'id']), node.data.fields.issuelinks? node.data.fields.issuelinks: []);
+    const getTarget = (node) => R.path([0, 'id'], node.data.fields.issuelinks? node.data.fields.issuelinks: []);
     const edges = R.map(node => {
         const target = getTarget(node);
         return target ? {data: {source: node.id, target, group: "edges"}}: null;
