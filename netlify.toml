@@ -1,3 +1,2 @@
 [build]
 	functions = "functions"
-    Command = "cd functions/get-jira-demo npm i"
