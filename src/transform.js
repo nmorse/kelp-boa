@@ -4,11 +4,11 @@ const transformIssuesToNodes = (obj) => {
     //console.log('*** transform input ***', obj);
     const nodes = R.map(ele => ({data: ele, group: "nodes"}), R.prop('issues', obj));
     
-    //data.fields.issuelinks[0].id
-    const getTarget = (node) => R.path([0, 'id'], node.data.fields.issuelinks? node.data.fields.issuelinks: []);
+    //data.fields.issuelinks[0].inwardIssue.key
+    const getTarget = (node) => R.path(['data', 'fields', 'issuelinks', 0, 'inwardIssue', 'key'], node.data.fields.issuelinks? node: null);
     const edges = R.map(node => {
         const target = getTarget(node);
-        return target ? {data: {source: node.data.id, target}, group: "edges"}: null;
+        return target ? {data: {source: node.data.key, target}, group: "edges"}: null;
     }, nodes);
     return R.concat(nodes, R.filter(notNull, edges));
 };
