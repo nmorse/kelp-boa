@@ -2,15 +2,26 @@ const notNull = n => (n !== null && n !== undefined);
 
 const transformIssuesToNodes = (obj) => {
     //console.log('*** transform input ***', obj);
-    const nodes = R.map(ele => ({data: {...ele, orig_id: id, id: ele.key }, group: "nodes"}), R.prop('issues', obj));
+    const nodes = R.map(ele => {
+        const data = { ...ele, orig_id: ele.id, id: ele.key };
+        return { data, group: "nodes" };
+    }, R.prop('issues', obj));
+    const node_ids = R.map(n => n.data.id, nodes);
     
     //data.fields.issuelinks[0].inwardIssue.key
     const getTarget = (node) => R.path(['data', 'fields', 'issuelinks', 0, 'inwardIssue', 'key'], node.data.fields.issuelinks? node: null);
     const edges = R.map(node => {
         const target = getTarget(node);
-        return target ? {data: {source: node.data.key, target}, group: "edges"}: null;
+        return target && R.includes(target, node_ids) ? {data: {source: node.data.key, target}, group: "edges"}: null;
     }, nodes);
-    return R.concat(nodes, R.filter(notNull, edges));
+
+    //data.fields.issuelinks[0].outwardIssue.key
+    const getTarget2 = (node) => R.path(['data', 'fields', 'issuelinks', 0, 'outwardIssue', 'key'], node.data.fields.issuelinks? node: null);
+    const edges2 = R.map(node => {
+        const target = getTarget2(node);
+        return target && R.includes(target, node_ids) ? {data: {source: node.data.key, target}, group: "edges"}: null;
+    }, nodes);
+    return R.concat(nodes, R.filter(notNull, edges), R.filter(notNull, edges2));
 };
 
 const getLabelsAsNodes = (obj) => {

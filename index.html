@@ -8,7 +8,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.16.2/cytoscape.min.js"
 		integrity="sha512-90CUvhfbtRMgSr2cvzgYyGchUg2CtOHMavYdm03huN42UAjWtKhHBsQ+H7K4KGJ4MeS0P9FiZZwC7lxnIl6isg=="
 		crossorigin="anonymous"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+
+		
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.26.0/ramda.min.js"></script>
 	<script src="./src/transform.js"></script>
 	<style>
 		body {
@@ -42,6 +44,8 @@
 </body>
 <script>
 	const netlifyProxy = '/.netlify/functions/get-jira-demo';
+	//const localSrc = './src/graph-data-minimum.json';
+	//const localJiraSrc = './src/jira-data.json';
 	var cy = cytoscape({
 		container: document.getElementById('cy'), // container to render in
 		elements: getGraphElements(netlifyProxy),
@@ -64,12 +68,14 @@
 				}
 			}
 		],
+		// layout: {
+		// 	name: 'grid',
+		// 	rows: 2
+		// }
 		layout: {
-			name: 'grid',
-			rows: 2
+			name: 'cose'
 		}
-
-		// // demo your layout
+		// demo your layout
 		// layout: {
 		//     name: 'euler',
 		//     randomize: true,
@@ -77,8 +83,6 @@
 
 		//     // some more options here...
 		// },
-
-
 	});
 	// Get method implementation:
 	async function getGraphElements(url = '') {
@@ -88,6 +92,7 @@
 			const respBody = response.ok ? await response.json() : []; // parses JSON response into native JavaScript objects
 			console.log('*** respBody ***', respBody);
 			return transformIssuesToNodes(respBody.data);
+			//return transformIssuesToNodes(respBody);
 		}
 		catch (e) {
 			console.log('*** response error ***', e);
