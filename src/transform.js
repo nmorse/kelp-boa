@@ -2,7 +2,7 @@ const notNull = n => (n !== null && n !== undefined);
 
 const transformIssuesToNodes = (obj) => {
     //console.log('*** transform input ***', obj);
-    const nodes = R.map(ele => ({data: ele, group: "nodes"}), R.prop('issues', obj));
+    const nodes = R.map(ele => ({data: {...ele, orig_id: id, id: ele.key }, group: "nodes"}), R.prop('issues', obj));
     
     //data.fields.issuelinks[0].inwardIssue.key
     const getTarget = (node) => R.path(['data', 'fields', 'issuelinks', 0, 'inwardIssue', 'key'], node.data.fields.issuelinks? node: null);
